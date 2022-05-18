@@ -7,6 +7,15 @@ function DateSelector() {
   const Calendar = CalendarTemplate({
     availability,
     setAvailability,
+    primaryColor: '#CCCCCC',
+    secondaryColor: '#EEEEEE',
+    primaryFontColor: '#444444',
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    startTime: '5:00',
+    endTime: '22:00',
+    availability,
+    setAvailability,
   });
   return <Calendar />;
 }

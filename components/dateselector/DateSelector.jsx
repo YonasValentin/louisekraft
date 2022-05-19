@@ -22,6 +22,26 @@ function DateSelector() {
     return date.getDay() === 0 || date.getDay() === 6;
   }
 
+  /*function disableTime(timeValue, clockType) {
+    if (
+      clockType === 'hours' && if (isTimeBetween)
+    ) {
+      return true;
+    }
+  } */
+
+  /*function disableTime(timeValue, clockType) {
+    if (clockType === 'hours') {
+      if (isTimeBetween(timeValue, 0, 8) || isTimeBetween(timeValue, 20, 24)) {
+        return true;
+      }
+    }
+  }
+
+  function isTimeBetween(timeValue, startTime, endTime) {
+    return timeValue >= startTime && timeValue < endTime;
+  } */
+
   return (
     <LocalizationProvider
       utils={LocalizedUtils}
@@ -29,13 +49,9 @@ function DateSelector() {
       dateAdapter={AdapterDateFns}
     >
       <DateTimePicker
-        /*shouldDisableTime={(timeValue, clockType) => {
-          if (clockType === 'hours' && timeValue < 12) {
-            return true;
-          }
-        }}*/
-        //minTime={new Date(0, 1, 2, 3, 4, 5, 6)}
-        //maxTime={new Date(0, 0, 0, 18, 30)}
+        //shouldDisableTime={disableTime}
+        minTime={new Date(0, 0, 0, 12)}
+        maxTime={new Date(0, 0, 0, 16)}
         shouldDisableDate={disableWeekdays}
         minutesStep={30}
         format='HH:mm dd/MM/yyyy'

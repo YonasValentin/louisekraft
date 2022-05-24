@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Link from 'next/link';
-import DatePicker from '../components/dateselector/DateSelector';
+import BookingForm from '../components/bookingform/BookingForm';
 import NavBar from '../components/navbar/NavBar';
 
 export default function Home() {
@@ -54,7 +54,7 @@ export default function Home() {
             </p>
           </a>
         </div>
-        <DatePicker />
+        <BookingForm />
       </main>
 
       <footer className={styles.footer}>

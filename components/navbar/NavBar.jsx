@@ -15,19 +15,32 @@ function NavBar() {
       className='navbar'
     >
       <Container className='navbar__container'>
-        <Navbar.Brand href='#'>Navbar</Navbar.Brand>
+        <Navbar.Brand href='#'>Louise Kraft</Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav>
-            <Nav.Link href='#'>Link</Nav.Link>
-            <Nav.Link href='#'>Link</Nav.Link>
-            <Nav.Link href='#'>Link</Nav.Link>
-            <Nav.Link href='#'>Link</Nav.Link>
-            <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
-              <NavDropdown.Item href='#'>Action</NavDropdown.Item>
-              <NavDropdown.Item href='#'>Another action</NavDropdown.Item>
-              <NavDropdown.Item href='#'>Something</NavDropdown.Item>
+            <NavDropdown title='Ordblindhed' id='collasible-nav-dropdown'>
+              <NavDropdown.Item href='#'>Hvad er ordblindhed?</NavDropdown.Item>
+              <NavDropdown.Item href='#'>
+                Tidlige tegn på ordblindhed
+              </NavDropdown.Item>
+              <NavDropdown.Item href='#'>
+                Tjekliste på ordblindhed
+              </NavDropdown.Item>
             </NavDropdown>
+            <NavDropdown title='Forældre' id='collasible-nav-dropdown'>
+              <NavDropdown.Item href='#'>
+                Hvordan hjælper du dit barn?
+              </NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link href='#'>Ydelser</Nav.Link>
+            <NavDropdown
+              title='For professionelle'
+              id='collasible-nav-dropdown'
+            >
+              <NavDropdown.Item href='#'>Kurser og foredrag</NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link href='#'>Kontakt</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

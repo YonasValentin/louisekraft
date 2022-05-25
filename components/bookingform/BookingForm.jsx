@@ -18,12 +18,26 @@ class LocalizedUtils extends DateFnsUtils {
 function BookingForm() {
   const [value, setValue] = useState(null);
 
-  const [formLabelTexts, setFormLabelTexts] = useState([]);
+  const [formLabelText, setFormLabelText] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState(null);
   const [service, setService] = useState('');
+
+  /*
+  useEffect(() => {
+    async function fetchData() {
+      let response = await fetch(
+        'https://wp.louisekraft.dk/wp-json/wp/v2/appointments?acf_format=standard'
+      );
+      response = await response.json();
+      setFormLabelTexts(response);
+      console.log(response);
+    }
+    fetchData();
+  }, []);
+  */
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +47,7 @@ function BookingForm() {
         );
         if (response.status === 200) {
           let data = await response.json();
-          setFormLabelTexts(data);
+          setFormLabelText(data);
           console.log(data);
         } else {
           throw 'error';
@@ -80,11 +94,7 @@ function BookingForm() {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        {formLabelTexts.map((formLabelText) => {
-          return (
-            <div key={formLabelText.id}>{formLabelText.acf.firstname}</div>
-          );
-        })}
+        <span>{formLabelText?.acf?.firstname}</span>
         <input
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
@@ -96,9 +106,6 @@ function BookingForm() {
       </label>
 
       <label>
-        {formLabelTexts.map((formLabelText) => {
-          return <div key={formLabelText.id}>{formLabelText.acf.lastname}</div>;
-        })}
         <input
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -110,9 +117,6 @@ function BookingForm() {
       </label>
 
       <label>
-        {formLabelTexts.map((formLabelText) => {
-          return <div key={formLabelText.id}>{formLabelText.acf.email}</div>;
-        })}
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -124,9 +128,6 @@ function BookingForm() {
       </label>
 
       <label>
-        {formLabelTexts.map((formLabelText) => {
-          return <div key={formLabelText.id}>{formLabelText.acf.phone}</div>;
-        })}
         <input
           value={phone}
           placeholder='Indtast telefonnummer'

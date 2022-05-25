@@ -106,6 +106,7 @@ function BookingForm() {
       </label>
 
       <label>
+        <span>{formLabelText?.acf?.lastname}</span>
         <input
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -117,6 +118,7 @@ function BookingForm() {
       </label>
 
       <label>
+        <span>{formLabelText?.acf?.email}</span>
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -128,6 +130,7 @@ function BookingForm() {
       </label>
 
       <label>
+        <span>{formLabelText?.acf?.phone}</span>
         <input
           value={phone}
           placeholder='Indtast telefonnummer'
@@ -139,7 +142,7 @@ function BookingForm() {
       </label>
 
       <label>
-        Hvilken ydelse ønsker du at booke?
+        <span>{formLabelText?.acf?.ydelse}</span>
         <select
           value={service}
           onChange={(e) => setService(e.target.value)}

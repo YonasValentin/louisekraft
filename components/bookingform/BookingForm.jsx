@@ -1,32 +1,55 @@
-import DateSelector from '../dateselector/DateSelector';
 import React, { useEffect, useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import db from '/firebase-config';
+import daLocale from 'date-fns/locale/da';
+import DateFnsUtils from '@date-io/date-fns';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import format from 'date-fns/format';
+
+class LocalizedUtils extends DateFnsUtils {
+  getDatePickerHeaderText(date) {
+    return format(date, 'd MMM yyyy', { locale: this.locale });
+  }
+}
 
 function BookingForm() {
-  const [formLabelText, setFormLabelText] = useState('');
+  const [value, setValue] = useState(null);
+
+  const [formLabelTexts, setFormLabelTexts] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState(null);
   const [service, setService] = useState('');
 
-  /*
-
   useEffect(() => {
-    const fetchAppointmentsText = async () => {
-      const data = await fetch(
-        'https://wp.louisekraft.dk/wp-json/wp/v2/appointments?acf_format=standard'
-      );
-      const json = await response.json();
-      console.log(json);
-
-      setData(json);
-
-      fetchAppointmentsText().catch((err) => console.log(err));
+    const fetchData = async () => {
+      try {
+        let response = await fetch(
+          'https://wp.louisekraft.dk/wp-json/wp/v2/appointments?acf_format=standard'
+        );
+        if (response.status === 200) {
+          let data = await response.json();
+          setFormLabelTexts(data);
+          console.log(data);
+        } else {
+          throw 'error';
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
+    fetchData();
   }, []);
 
-  */
+  console.log({ value: value && value.toLocaleString() });
+
+  function disableWeekdays(date) {
+    return date.getDay() === 0 || date.getDay() === 6;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +60,8 @@ function BookingForm() {
         lastname: lastName,
         email: email,
         service: service,
+        phone: phone,
+        date: value,
       });
       console.log('Document written with ID: ', docRef.id);
       alert('Your message has been sent successfully');
@@ -48,40 +73,67 @@ function BookingForm() {
     setLastName('');
     setEmail('');
     setService('');
+    setPhone('');
+    setValue(null);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Fornavn
+        {formLabelTexts.map((formLabelText) => {
+          return (
+            <div key={formLabelText.id}>{formLabelText.acf.firstname}</div>
+          );
+        })}
         <input
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           id='firstname'
           type='text'
           placeholder='Indtast fornavn'
+          required
         ></input>
       </label>
 
       <label>
-        Efternavn
+        {formLabelTexts.map((formLabelText) => {
+          return <div key={formLabelText.id}>{formLabelText.acf.lastname}</div>;
+        })}
         <input
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           id='lastname'
           type='text'
           placeholder='Indtast efternavn'
+          required
         ></input>
       </label>
 
       <label>
-        Email
+        {formLabelTexts.map((formLabelText) => {
+          return <div key={formLabelText.id}>{formLabelText.acf.email}</div>;
+        })}
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           id='email'
           type='email'
           placeholder='Indtast email'
+          required
+        ></input>
+      </label>
+
+      <label>
+        {formLabelTexts.map((formLabelText) => {
+          return <div key={formLabelText.id}>{formLabelText.acf.phone}</div>;
+        })}
+        <input
+          value={phone}
+          placeholder='Indtast telefonnummer'
+          onChange={(e) => setPhone(e.target.value)}
+          id='phone'
+          type='tel'
+          required
         ></input>
       </label>
 
@@ -91,6 +143,7 @@ function BookingForm() {
           value={service}
           onChange={(e) => setService(e.target.value)}
           id='services'
+          required
         >
           <option>Udredning for ordblind</option>
           <option>Netværksmøde med forældre og skole</option>
@@ -98,6 +151,33 @@ function BookingForm() {
             Vejledning og undervisning i brug af hjælpemidler i skolens fag
           </option>
         </select>
+      </label>
+
+      <label>
+        Vælg tid og dato
+        <LocalizationProvider
+          utils={LocalizedUtils}
+          locale={daLocale}
+          dateAdapter={AdapterDateFns}
+        >
+          <DateTimePicker
+            //shouldDisableTime={disableTime}
+            minTime={new Date(0, 0, 0, 12)}
+            maxTime={new Date(0, 0, 0, 16)}
+            shouldDisableDate={disableWeekdays}
+            minutesStep={30}
+            format='HH:mm dd/MM/yyyy'
+            hideTodayButton
+            disablePast
+            ampm={false}
+            renderInput={(props) => <TextField {...props} />}
+            label='Vælg dato og klokkeslæt'
+            value={value}
+            onChange={(newValue) => {
+              setValue(newValue);
+            }}
+          />
+        </LocalizationProvider>
       </label>
 
       <button type='submit'>Submit</button>

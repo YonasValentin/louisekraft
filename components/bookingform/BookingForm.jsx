@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import db from '/firebase-config';
 import daLocale from 'date-fns/locale/da';
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+//import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import format from 'date-fns/format';
+import TimePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import setHours from 'date-fns/setHours';
+import setMinutes from 'date-fns/setMinutes';
 
 class LocalizedUtils extends DateFnsUtils {
   getDatePickerHeaderText(date) {
@@ -16,50 +21,28 @@ class LocalizedUtils extends DateFnsUtils {
 }
 
 function BookingForm() {
-  const [value, setValue] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState(
+    setHours(setMinutes(new Date(), 0), 9)
+  );
 
   const [formLabelText, setFormLabelText] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState(null);
-  const [service, setService] = useState('');
-
-  /*
-  useEffect(() => {
-    async function fetchData() {
-      let response = await fetch(
-        'https://wp.louisekraft.dk/wp-json/wp/v2/appointments?acf_format=standard'
-      );
-      response = await response.json();
-      setFormLabelTexts(response);
-      console.log(response);
-    }
-    fetchData();
-  }, []);
-  */
+  const [phone, setPhone] = useState('');
+  const [service, setService] = useState();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let response = await fetch(
-          'https://wp.louisekraft.dk/wp-json/wp/v2/appointments?acf_format=standard'
-        );
-        if (response.status === 200) {
-          let data = await response.json();
-          setFormLabelText(data);
-          console.log(data);
-        } else {
-          throw 'error';
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
+    fetch('https://wp.louisekraft.dk/wp-json/wp/v2/posts?include=18')
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setFormLabelText(data);
+        console.log(data);
+      });
   }, []);
-
-  console.log({ value: value && value.toLocaleString() });
 
   function disableWeekdays(date) {
     return date.getDay() === 0 || date.getDay() === 6;
@@ -75,7 +58,8 @@ function BookingForm() {
         email: email,
         service: service,
         phone: phone,
-        date: value,
+        date: selectedDate,
+        time: selectedTime,
       });
       console.log('Document written with ID: ', docRef.id);
       alert('Your message has been sent successfully');
@@ -88,13 +72,40 @@ function BookingForm() {
     setEmail('');
     setService('');
     setPhone('');
-    setValue(null);
+    setSelectedDate(null);
+    setSelectedTime(null);
   };
+
+  const appointmentsRef = collection(db, 'appointments');
+
+  async function getDate(selectedDate) {
+    console.log(selectedDate);
+    const result = [];
+    const querySnapshot = await getDocs(appointmentsRef);
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+
+      const jsDate = data.date.toDate();
+      console.log(jsDate);
+
+      //const today = new Date();
+
+      if (
+        jsDate.getFullYear() === selectedDate.getFullYear() &&
+        jsDate.getDate() === selectedDate.getDate() &&
+        jsDate.getMonth() === selectedDate.getMonth()
+      ) {
+        result.push(data);
+      }
+    });
+
+    setSelectedDate(result);
+  }
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        <span>{formLabelText?.acf?.firstname}</span>
+        <span>{formLabelText[0]?.acf?.firstname}</span>
         <input
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
@@ -106,7 +117,7 @@ function BookingForm() {
       </label>
 
       <label>
-        <span>{formLabelText?.acf?.lastname}</span>
+        <span>{formLabelText[0]?.acf?.lastname}</span>
         <input
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -118,7 +129,7 @@ function BookingForm() {
       </label>
 
       <label>
-        <span>{formLabelText?.acf?.email}</span>
+        <span>{formLabelText[0]?.acf?.email}</span>
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -130,7 +141,7 @@ function BookingForm() {
       </label>
 
       <label>
-        <span>{formLabelText?.acf?.phone}</span>
+        <span>{formLabelText[0]?.acf?.phone}</span>
         <input
           value={phone}
           placeholder='Indtast telefonnummer'
@@ -142,47 +153,59 @@ function BookingForm() {
       </label>
 
       <label>
-        <span>{formLabelText?.acf?.ydelse}</span>
+        <span>{formLabelText[0]?.acf?.ydelse}</span>
+
         <select
           value={service}
           onChange={(e) => setService(e.target.value)}
           id='services'
           required
+          defaultValue={'default'}
         >
-          <option>Udredning for ordblind</option>
-          <option>Netværksmøde med forældre og skole</option>
-          <option>
+          <option disabled value={'default'}>
+            Choose
+          </option>
+          <option value={'one'}>Udredning for ordblind</option>
+          <option value={'two'}>Netværksmøde med forældre og skole</option>
+          <option value={'three'}>
             Vejledning og undervisning i brug af hjælpemidler i skolens fag
           </option>
         </select>
       </label>
 
       <label>
-        Vælg tid og dato
+        <span>{formLabelText[0]?.acf?.dateandtime}</span>
+
         <LocalizationProvider
           utils={LocalizedUtils}
           locale={daLocale}
           dateAdapter={AdapterDateFns}
         >
-          <DateTimePicker
-            //shouldDisableTime={disableTime}
-            minTime={new Date(0, 0, 0, 12)}
-            maxTime={new Date(0, 0, 0, 16)}
+          <DatePicker
             shouldDisableDate={disableWeekdays}
-            minutesStep={30}
-            format='HH:mm dd/MM/yyyy'
-            hideTodayButton
-            disablePast
-            ampm={false}
             renderInput={(props) => <TextField {...props} />}
-            label='Vælg dato og klokkeslæt'
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue);
-            }}
-          />
+            value={selectedDate}
+            onChange={getDate}
+            disablePast
+          ></DatePicker>
         </LocalizationProvider>
+
+        <TimePicker
+          value={selectedTime}
+          minTime={setHours(setMinutes(new Date(), 0), 9)}
+          maxTime={setHours(setMinutes(new Date(), 0), 16)}
+          selected={selectedTime}
+          onChange={(date) => setSelectedTime(date)}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={60}
+          timeCaption='Time'
+          dateFormat='HH:mm'
+          timeFormat='HH:mm'
+        ></TimePicker>
       </label>
+
+      <audio controls src={formLabelText[0]?.acf?.file}></audio>
 
       <button type='submit'>Submit</button>
     </form>

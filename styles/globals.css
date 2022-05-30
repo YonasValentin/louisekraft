@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -13,4 +17,15 @@ a {
 
 * {
   box-sizing: border-box;
+}
+.navbar {
+  background-color: red;
+}
+
+.navbar-light .navbar-toggler {
+  border: none !important;
+}
+
+.navbar-burger .navbar-toggler {
+  border: none !important;
 }

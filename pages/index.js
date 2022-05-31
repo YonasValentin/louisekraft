@@ -2,7 +2,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import BookingForm from '../components/bookingform/BookingForm';
-import NavBar from '../components/navbar/NavBar';
 
 export default function Home() {
   return (
@@ -14,7 +13,6 @@ export default function Home() {
       </Head>
 
       <main>
-        <NavBar />
         <h1>
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>

@@ -24,6 +24,7 @@ function BookingForm() {
   const [selectedTime, setSelectedTime] = useState(
     setHours(setMinutes(new Date(), 0), 9)
   );
+  const [selectedBookingDate, setSelectedBookingDate] = useState([]);
 
   const [formLabelText, setFormLabelText] = useState([]);
   const [firstName, setFirstName] = useState('');
@@ -78,26 +79,26 @@ function BookingForm() {
   const appointmentsRef = collection(db, 'appointments');
 
   async function getDate(selectedDate) {
-    console.log(selectedDate);
-    const result = [];
+    setSelectedDate(selectedDate);
+
+    const bookingDates = [];
 
     const querySnapshot = await getDocs(appointmentsRef);
     querySnapshot.forEach((doc) => {
-      const data = doc.data();
-
-      const jsDate = data.date.toDate();
-      console.log(jsDate);
+      const booking = doc.data();
+      const bookingDate = booking.date.toDate();
 
       if (
-        jsDate.getFullYear() === selectedDate.getFullYear() &&
-        jsDate.getDate() === selectedDate.getDate() &&
-        jsDate.getMonth() === selectedDate.getMonth()
+        bookingDate.getFullYear() === selectedDate.getFullYear() &&
+        bookingDate.getDate() === selectedDate.getDate() &&
+        bookingDate.getMonth() === selectedDate.getMonth()
       ) {
-        result.push(data);
+        bookingDates.push(bookingDate);
       }
     });
 
-    setSelectedDate(result);
+    console.log(bookingDates);
+    setSelectedDate(bookingDates);
   }
 
   return (

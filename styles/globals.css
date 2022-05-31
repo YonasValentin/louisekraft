@@ -18,6 +18,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.layout {
+  max-width: 1920px;
+  margin: 0 auto;
+}
 .navbar {
   background-color: red;
 }

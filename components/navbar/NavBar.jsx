@@ -5,6 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import IonIcon from '@reacticons/ionicons';
+import Link from 'next/link';
 
 function NavBar() {
   return (
@@ -15,9 +16,12 @@ function NavBar() {
       className='navbar sm:min-h-64 lg:min-h-100 bg-white'
     >
       <Container>
-        <Navbar.Brand style={{ color: '#116984', fontSize: '24px' }} href='#'>
-          Louise Kraft
-        </Navbar.Brand>
+        <Link href='#' passHref>
+          <Navbar.Brand style={{ color: '#116984', fontSize: '24px' }}>
+            Louise Kraft
+          </Navbar.Brand>
+        </Link>
+
         <Navbar.Toggle
           style={{
             border: 'none',
@@ -49,43 +53,59 @@ function NavBar() {
               title={<span style={{ color: '#116984' }}>Ordblindhed</span>}
               id='collasible-nav-dropdown'
             >
-              <NavDropdown.Item style={{ color: '#116984' }} href='#'>
-                Hvad er ordblindhed?
-              </NavDropdown.Item>
-              <NavDropdown.Item style={{ color: '#116984' }} href='#'>
-                Tidlige tegn på ordblindhed
-              </NavDropdown.Item>
-              <NavDropdown.Item style={{ color: '#116984' }} href='#'>
-                Tjekliste på ordblindhed
-              </NavDropdown.Item>
+              <Link href='#' passHref>
+                <NavDropdown.Item style={{ color: '#116984' }} href='#'>
+                  Hvad er ordblindhed?
+                </NavDropdown.Item>
+              </Link>
+
+              <Link href='#' passHref>
+                <NavDropdown.Item style={{ color: '#116984' }}>
+                  Tidlige tegn på ordblindhed
+                </NavDropdown.Item>
+              </Link>
+
+              <Link href='#' passHref>
+                <NavDropdown.Item style={{ color: '#116984' }}>
+                  Tjekliste på ordblindhed
+                </NavDropdown.Item>
+              </Link>
             </NavDropdown>
             <NavDropdown
               title={<span style={{ color: '#116984' }}>Forældre</span>}
               id='collasible-nav-dropdown'
             >
-              <NavDropdown.Item style={{ color: '#116984' }} href='#'>
-                Hvordan hjælper du dit barn?
-              </NavDropdown.Item>
+              <Link href='#' passHref>
+                <NavDropdown.Item style={{ color: '#116984' }}>
+                  Hvordan hjælper du dit barn?
+                </NavDropdown.Item>
+              </Link>
             </NavDropdown>
-            <Nav.Link style={{ color: '#116984' }} href='#'>
-              Ydelser
-            </Nav.Link>
+
+            <Link href='#' passHref>
+              <Nav.Link style={{ color: '#116984' }}>Ydelser</Nav.Link>
+            </Link>
+
             <NavDropdown
               title={
                 <span style={{ color: '#116984' }}>For professionelle</span>
               }
               id='collasible-nav-dropdown'
             >
-              <NavDropdown.Item style={{ color: '#116984' }} href='#'>
-                Kurser og foredrag
-              </NavDropdown.Item>
+              <Link href='#' passHref>
+                <NavDropdown.Item style={{ color: '#116984' }}>
+                  Kurser og foredrag
+                </NavDropdown.Item>
+              </Link>
             </NavDropdown>
-            <Nav.Link style={{ color: '#116984' }} href='#'>
-              Om mig
-            </Nav.Link>
-            <Nav.Link style={{ color: '#116984' }} href='#'>
-              Kontakt
-            </Nav.Link>
+
+            <Link href='#' passHref>
+              <Nav.Link style={{ color: '#116984' }}>Om mig</Nav.Link>
+            </Link>
+
+            <Link href='#' passHref>
+              <Nav.Link style={{ color: '#116984' }}>Kontakt</Nav.Link>
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

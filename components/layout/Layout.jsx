@@ -2,7 +2,7 @@ import NavBar from '../navbar/NavBar';
 
 function Layout({ children }) {
   return (
-    <main>
+    <main className='layout'>
       <NavBar />
       {children}
     </main>

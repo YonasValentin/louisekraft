@@ -7,7 +7,6 @@ import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-//import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import format from 'date-fns/format';
 import TimePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -21,7 +20,7 @@ class LocalizedUtils extends DateFnsUtils {
 }
 
 function BookingForm() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState([]);
   const [selectedTime, setSelectedTime] = useState(
     setHours(setMinutes(new Date(), 0), 9)
   );
@@ -81,14 +80,13 @@ function BookingForm() {
   async function getDate(selectedDate) {
     console.log(selectedDate);
     const result = [];
+
     const querySnapshot = await getDocs(appointmentsRef);
     querySnapshot.forEach((doc) => {
       const data = doc.data();
 
       const jsDate = data.date.toDate();
       console.log(jsDate);
-
-      //const today = new Date();
 
       if (
         jsDate.getFullYear() === selectedDate.getFullYear() &&
@@ -195,7 +193,7 @@ function BookingForm() {
           minTime={setHours(setMinutes(new Date(), 0), 9)}
           maxTime={setHours(setMinutes(new Date(), 0), 16)}
           selected={selectedTime}
-          onChange={(date) => setSelectedTime(date)}
+          onChange={(time) => setSelectedTime(time)}
           showTimeSelect
           showTimeSelectOnly
           timeIntervals={60}

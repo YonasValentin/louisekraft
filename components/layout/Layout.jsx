@@ -3,8 +3,10 @@ import NavBar from '../navbar/NavBar';
 function Layout({ children }) {
   return (
     <main className='layout'>
-      <NavBar />
-      {children}
+      <div className='layout__container'>
+        <NavBar />
+        {children}
+      </div>
     </main>
   );
 }

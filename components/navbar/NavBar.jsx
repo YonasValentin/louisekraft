@@ -9,102 +9,88 @@ import Link from 'next/link';
 
 function NavBar() {
   return (
-    <Navbar
-      collapseOnSelect
-      expand='lg'
-      fixed='top'
-      className='navbar sm:min-h-64 lg:min-h-100 bg-white'
-    >
-      <Container>
+    <Navbar collapseOnSelect expand='lg' fixed='top' className='navbar'>
+      <Container className='navbar__container'>
         <Link href='#' passHref>
-          <Navbar.Brand style={{ color: '#116984', fontSize: '24px' }}>
-            Louise Kraft
-          </Navbar.Brand>
+          <Navbar.Brand className='navbar__brand'>Louise Kraft</Navbar.Brand>
         </Link>
 
         <Navbar.Toggle
-          style={{
-            border: 'none',
-            outline: 'none',
-            boxShadow: 'none',
-            color: '#116984',
-          }}
+          className='navbar__toggle'
           aria-controls='responsive-navbar-nav'
         >
           <span>
             <IonIcon
-              style={{ height: '100%', width: '40px', display: 'flex' }}
+              className='navbar__toggle-icon'
               name='menu-outline'
             ></IonIcon>
           </span>
         </Navbar.Toggle>
 
-        <Navbar.Collapse id='responsive-navbar-nav'>
+        <Navbar.Collapse
+          className='navbar__collapse'
+          id='responsive-navbar-nav'
+        >
           <Nav>
             <NavDropdown
-              className='border-0'
-              style={{
-                border: 'none',
-                color: '#116984',
-                '::after': { color: '#116984' },
-                marginRight: '20px',
-                backgroundColor: '#8766',
-              }}
-              title={<span style={{ color: '#116984' }}>Ordblindhed</span>}
+              className='navbar__item'
+              title={<span className='navbar__item'>Ordblindhed</span>}
               id='collasible-nav-dropdown'
             >
               <Link href='#' passHref>
-                <NavDropdown.Item style={{ color: '#116984' }} href='#'>
+                <NavDropdown.Item className='navbar__item' href='#'>
                   Hvad er ordblindhed?
                 </NavDropdown.Item>
               </Link>
 
               <Link href='#' passHref>
-                <NavDropdown.Item style={{ color: '#116984' }}>
+                <NavDropdown.Item className='navbar__item'>
                   Tidlige tegn på ordblindhed
                 </NavDropdown.Item>
               </Link>
 
               <Link href='#' passHref>
-                <NavDropdown.Item style={{ color: '#116984' }}>
+                <NavDropdown.Item className='navbar__item'>
                   Tjekliste på ordblindhed
                 </NavDropdown.Item>
               </Link>
             </NavDropdown>
             <NavDropdown
-              title={<span style={{ color: '#116984' }}>Forældre</span>}
+              title={<span className='navbar__item'>Forældre</span>}
               id='collasible-nav-dropdown'
             >
               <Link href='#' passHref>
-                <NavDropdown.Item style={{ color: '#116984' }}>
+                <NavDropdown.Item className='navbar__item'>
                   Hvordan hjælper du dit barn?
                 </NavDropdown.Item>
               </Link>
             </NavDropdown>
 
             <Link href='#' passHref>
-              <Nav.Link style={{ color: '#116984' }}>Ydelser</Nav.Link>
+              <Nav.Link className='navbar__item'>Ydelser</Nav.Link>
             </Link>
 
             <NavDropdown
-              title={
-                <span style={{ color: '#116984' }}>For professionelle</span>
-              }
+              title={<span className='navbar__item'>For professionelle</span>}
               id='collasible-nav-dropdown'
             >
               <Link href='#' passHref>
-                <NavDropdown.Item style={{ color: '#116984' }}>
+                <NavDropdown.Item className='navbar__item'>
                   Kurser og foredrag
                 </NavDropdown.Item>
               </Link>
             </NavDropdown>
 
             <Link href='#' passHref>
-              <Nav.Link style={{ color: '#116984' }}>Om mig</Nav.Link>
+              <Nav.Link className='navbar__item'>Om mig</Nav.Link>
             </Link>
 
             <Link href='#' passHref>
-              <Nav.Link style={{ color: '#116984' }}>Kontakt</Nav.Link>
+              <Nav.Link className='navbar__item'>Kontakt</Nav.Link>
+            </Link>
+
+            <Link href='#' passHref>
+              <Nav.Link className='navbar__item'>Book tid</Nav.Link>
             </Link>
           </Nav>
         </Navbar.Collapse>

@@ -1,36 +1,213 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url("https://use.typekit.net/wvi7dru.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+/* include media */
+/* variables */
+/* fonts */
+@font-face {
+  font-family: "poor_richardregular";
+  src: url("poorich-webfont.woff2") format("woff2"), url("poorich-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
+*,
+* ::before,
+*::after {
   box-sizing: border-box;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  list-style: none;
+}
+
+html,
+body {
+  font-family: "Muli", "Quicksand", "poor-richard-regular", sans-serif;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
 .layout {
-  max-width: 1920px;
   margin: 0 auto;
+  min-height: 100vh;
 }
+.layout__container {
+  max-width: 1440px;
+  margin: 0 auto 40px;
+  padding: 0 20px 0 19px;
+}
+@media (min-width: 768px) {
+  .layout__container {
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-bottom: 64px;
+  }
+}
+@media (min-width: 1024px) {
+  .layout__container {
+    padding-right: 44px;
+    padding-left: 44px;
+  }
+}
+@media (min-width: 1280px) {
+  .layout__container {
+    padding-right: 128px;
+    padding-left: 128px;
+  }
+}
+@media (min-width: 1440px) {
+  .layout__container {
+    padding-right: 160px;
+    padding-left: 160px;
+  }
+}
+
 .navbar {
-  background-color: red;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background-color: #fff;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 1024px) {
+  .navbar {
+    height: 100px;
+  }
+}
+.navbar__container {
+  max-width: 1440px;
+  margin: 0 auto 40px;
+  padding: 0 20px 0 19px;
+  margin: 0 !important;
+}
+@media (min-width: 768px) {
+  .navbar__container {
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-bottom: 64px;
+  }
+}
+@media (min-width: 1024px) {
+  .navbar__container {
+    padding-right: 44px;
+    padding-left: 44px;
+  }
+}
+@media (min-width: 1280px) {
+  .navbar__container {
+    padding-right: 128px;
+    padding-left: 128px;
+  }
+}
+@media (min-width: 1440px) {
+  .navbar__container {
+    padding-right: 160px;
+    padding-left: 160px;
+  }
+}
+.navbar__brand {
+  font-family: "poor_richardregular", sans-serif;
+  color: #116984 !important;
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+@media (min-width: 1024px) {
+  .navbar__brand {
+    font-size: 32px;
+  }
+}
+.navbar__toggle {
+  border: none !important;
+  color: #116984 !important;
+  box-shadow: none !important;
+  outline: none;
+}
+.navbar__toggle-icon {
+  width: 100% !important;
+  height: 28px !important;
+}
+.navbar__collapse {
+  background-color: #fff;
+}
+.navbar__item {
+  color: #116984 !important;
 }
 
-.navbar-light .navbar-toggler {
+.dropdown-menu {
   border: none !important;
+}
+@media (min-width: 1024px) {
+  .dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 27px 8px;
+  }
 }
 
-.navbar-burger .navbar-toggler {
-  border: none !important;
+.dropdown-toggle::after {
+  color: #116984 !important;
 }
+
+.home {
+  padding-top: 64px;
+}
+@media (min-width: 1024px) {
+  .home {
+    padding-top: 100px;
+  }
+}
+
+.hero__container {
+  background-color: #f9f7fb;
+}
+.hero__text-area {
+  max-width: 742px;
+}
+.hero__text-area-title {
+  font-family: "Muli", sans-serif;
+  color: #0a485a;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+}
+@media (min-width: 1024px) {
+  .hero__text-area-title {
+    font-size: 50px;
+    line-height: 63px;
+  }
+}
+.hero__text-area-btn {
+  padding: 8px 28px;
+  background-color: #ffaa00;
+  color: #0a485a;
+  border-radius: 23px;
+}/*# sourceMappingURL=globals.css.map */

@@ -24,9 +24,10 @@ function BookingForm() {
   const [selectedTime, setSelectedTime] = useState(
     setHours(setMinutes(new Date(), 0), 9)
   );
-  const [selectedBookingDate, setSelectedBookingDate] = useState([]);
+  const [selectedBookingDates, setSelectedBookingDates] = useState([]);
 
   const [formLabelText, setFormLabelText] = useState([]);
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -79,26 +80,29 @@ function BookingForm() {
   const appointmentsRef = collection(db, 'appointments');
 
   async function getDate(selectedDate) {
-    setSelectedDate(selectedDate);
+    setSelectedDate(selectedDate); // setSelectedDate - den der vises i datepicker
+    console.log(selectedDate);
 
-    const bookingDates = [];
+    const bookingDates = []; // til at holde de eksisterende bookinger fra firebase, der matcher selectedDate
 
     const querySnapshot = await getDocs(appointmentsRef);
     querySnapshot.forEach((doc) => {
       const booking = doc.data();
-      const bookingDate = booking.date.toDate();
+      const bookingDate = booking.date.toDate(); // konverter booking.date til en date der kan læses i JS
 
       if (
         bookingDate.getFullYear() === selectedDate.getFullYear() &&
         bookingDate.getDate() === selectedDate.getDate() &&
         bookingDate.getMonth() === selectedDate.getMonth()
       ) {
-        bookingDates.push(bookingDate);
+        bookingDates.push(bookingDate); // gemmer bookingDate i bookingDates
       }
     });
 
     console.log(bookingDates);
-    setSelectedDate(bookingDates);
+    setSelectedBookingDates(bookingDates); // sætter state, selectedBookingDates, med alle de eksisterende bookingdatoer
+
+    // Her bookingDates skal bruges til at disable tider i TimePicker
   }
 
   return (
@@ -201,6 +205,7 @@ function BookingForm() {
           timeCaption='Time'
           dateFormat='HH:mm'
           timeFormat='HH:mm'
+          excludeTimes={''}
         ></TimePicker>
       </label>
 

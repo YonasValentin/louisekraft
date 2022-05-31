@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* include media */
+@import './include-media';
+
+/* variables */
+@import './variables';
+
+/* fonts */
+@font-face {
+  font-family: 'poor_richardregular';
+  src: url('poorich-webfont.woff2') format('woff2'),
+    url('poorich-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://use.typekit.net/wvi7dru.css');
+
+*,
+* ::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  list-style: none;
+}
+
+html,
+body {
+  font-family: 'Muli', 'Quicksand', 'poor-richard-regular', sans-serif;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+.layout {
+  margin: 0 auto;
+  min-height: 100vh;
+
+  &__container {
+    @include container;
+  }
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background-color: #fff;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+
+  @include media('>=tablet') {
+    height: 100px;
+  }
+
+  &__container {
+    @include container;
+    margin: 0 !important;
+  }
+
+  &__brand {
+    font-family: 'poor_richardregular', sans-serif;
+    color: #116984 !important;
+    font-size: 24px;
+    letter-spacing: 1px;
+
+    @include media('>=tablet') {
+      font-size: 32px;
+    }
+  }
+
+  &__toggle {
+    border: none !important;
+    color: #116984 !important;
+    box-shadow: none !important;
+    outline: none;
+  }
+
+  &__toggle-icon {
+    width: 100% !important;
+    height: 28px !important;
+  }
+
+  &__collapse {
+    background-color: $white-color;
+  }
+
+  &__item {
+    color: $primary-color !important;
+  }
+}
+
+.dropdown-menu {
+  border: none !important;
+
+  @include media('>=tablet') {
+    border-radius: 8px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 27px 8px;
+  }
+}
+
+.dropdown-toggle {
+  &::after {
+    color: $primary-color !important;
+  }
+}
+
+.home {
+  padding-top: 64px;
+
+  @include media('>=tablet') {
+    padding-top: 100px;
+  }
+}
+
+.hero {
+  &__container {
+    background-color: $subtle-color;
+  }
+
+  &__text-area {
+    max-width: 742px;
+  }
+
+  &__text-area-title {
+    @include heading-h1;
+  }
+
+  &__text-area-btn {
+    padding: 8px 28px;
+    background-color: $accent-color;
+    color: $heading-color;
+    border-radius: 23px;
+  }
+}

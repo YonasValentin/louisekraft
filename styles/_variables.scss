@@ -1,0 +1,95 @@
+@mixin container() {
+  max-width: 1440px;
+  margin: 0 auto 40px;
+  padding: 0 20px 0 19px;
+
+  @include media('>=tablet_portrait') {
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-bottom: 64px;
+  }
+
+  @include media('>=tablet') {
+    padding-right: 44px;
+    padding-left: 44px;
+  }
+
+  @include media('>=laptop') {
+    padding-right: 128px;
+    padding-left: 128px;
+  }
+
+  @include media('>=desktop') {
+    padding-right: 160px;
+    padding-left: 160px;
+  }
+}
+
+$primary-color: #116984;
+$secondary-color: #8fc7d1;
+$heading-color: #0a485a;
+$body-color: #545454;
+$accent-color: #ffaa00;
+$subtle-color: #f9f7fb;
+$white-color: #fff;
+
+@mixin heading {
+  font-family: 'Muli', sans-serif;
+  color: $heading-color;
+  font-weight: 700;
+}
+
+@mixin heading-h1 {
+  @include heading;
+  font-size: 32px;
+  line-height: 40px;
+
+  @include media('>=tablet') {
+    font-size: 50px;
+    line-height: 63px;
+  }
+}
+
+@mixin heading-h2 {
+  @include heading;
+  font-size: 28px;
+  line-height: 35px;
+
+  @include media('>=tablet') {
+    font-size: 40px;
+    line-height: 50px;
+  }
+}
+
+@mixin heading-h3 {
+  @include heading;
+  font-size: 24px;
+  line-height: 30px;
+
+  @include media('>=tablet') {
+    font-size: 30px;
+    line-height: 38px;
+  }
+}
+
+@mixin heading-h4 {
+  @include heading;
+  font-size: 18px;
+  line-height: 23px;
+
+  @include media('>=tablet') {
+    font-size: 25px;
+    line-height: 31px;
+  }
+}
+
+@mixin heading-h5 {
+  @include heading;
+  font-size: 16px;
+  line-height: 20px;
+
+  @include media('>=tablet') {
+    font-size: 20px;
+    line-height: 25px;
+  }
+}

@@ -25,6 +25,7 @@ function BookingForm() {
     setHours(setMinutes(new Date(), 0), 9)
   );
   const [selectedBookingDates, setSelectedBookingDates] = useState([]);
+  const [selectedBookingTime, setSelectedBookingTime] = useState([]);
 
   const [formLabelText, setFormLabelText] = useState([]);
 
@@ -96,6 +97,9 @@ function BookingForm() {
         bookingDate.getMonth() === selectedDate.getMonth()
       ) {
         bookingDates.push(bookingDate); // gemmer bookingDate i bookingDates
+
+        const bookingTime = booking.time.toDate().getHours();
+        console.log(bookingTime);
       }
     });
 
@@ -205,7 +209,12 @@ function BookingForm() {
           timeCaption='Time'
           dateFormat='HH:mm'
           timeFormat='HH:mm'
-          excludeTimes={''}
+          excludeTimes={[
+            setHours(setMinutes(new Date(), 0), 13),
+            setHours(setMinutes(new Date(), 0), 14),
+            setHours(setMinutes(new Date(), 0), 15),
+            setHours(setMinutes(new Date(), 0), 16),
+          ]}
         ></TimePicker>
       </label>
 

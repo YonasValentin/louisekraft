@@ -90,7 +90,18 @@ function NavBar() {
             </Link>
 
             <Link href='#' passHref>
-              <Nav.Link className='navbar__item'>Book tid</Nav.Link>
+              <Nav.Link className='navbar__item navbar__booking'>
+                Book tid
+              </Nav.Link>
+            </Link>
+
+            <Link href='#' passHref>
+              <Nav.Link className='navbar__item navbar__language'>
+                <IonIcon
+                  className='navbar__toggle-icon'
+                  name='globe-outline'
+                ></IonIcon>
+              </Nav.Link>
             </Link>
           </Nav>
         </Navbar.Collapse>

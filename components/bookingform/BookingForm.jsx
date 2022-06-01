@@ -85,6 +85,7 @@ function BookingForm() {
     console.log(selectedDate);
 
     const bookingDates = []; // til at holde de eksisterende bookinger fra firebase, der matcher selectedDate
+    const bookingTimes = [];
 
     const querySnapshot = await getDocs(appointmentsRef);
     querySnapshot.forEach((doc) => {
@@ -97,14 +98,16 @@ function BookingForm() {
         bookingDate.getMonth() === selectedDate.getMonth()
       ) {
         bookingDates.push(bookingDate); // gemmer bookingDate i bookingDates
-
         const bookingTime = booking.time.toDate().getHours();
+        bookingTimes.push(bookingTime);
         console.log(bookingTime);
       }
     });
 
     console.log(bookingDates);
     setSelectedBookingDates(bookingDates); // sætter state, selectedBookingDates, med alle de eksisterende bookingdatoer
+    setSelectedBookingTime(bookingTimes);
+    console.log(bookingTimes);
 
     // Her bookingDates skal bruges til at disable tider i TimePicker
   }
@@ -209,16 +212,11 @@ function BookingForm() {
           timeCaption='Time'
           dateFormat='HH:mm'
           timeFormat='HH:mm'
-          excludeTimes={[
-            setHours(setMinutes(new Date(), 0), 13),
-            setHours(setMinutes(new Date(), 0), 14),
-            setHours(setMinutes(new Date(), 0), 15),
-            setHours(setMinutes(new Date(), 0), 16),
-          ]}
+          excludeTimes={[selectedBookingTime]}
         ></TimePicker>
       </label>
 
-      <audio controls src={formLabelText[0]?.acf?.file}></audio>
+      <audio controls src={formLabelText[0]?.acf?.audio}></audio>
 
       <button type='submit'>Submit</button>
     </form>

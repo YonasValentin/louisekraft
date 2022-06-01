@@ -30,6 +30,12 @@ export default function Home() {
         <div className='home__container'>
           <section className='hero'>
             <div className='hero__container'>
+              <audio
+                className='hero__audio'
+                type='audio/mp3'
+                src={homePageContent[0]?.acf.hero_audio}
+                controls
+              ></audio>
               <div className='hero__text-area'>
                 <h1 className='hero__text-area-title'>
                   {homePageContent[0]?.acf?.first_text}
@@ -42,6 +48,14 @@ export default function Home() {
                     {homePageContent[0]?.acf?.btn_text}
                   </button>
                 </Link>
+              </div>
+              <div className='hero__image-area'>
+                <figure>
+                  <img
+                    src={homePageContent[0]?.acf.image_hero}
+                    alt={homePageContent[0]?.acf.alt_text_hero}
+                  ></img>
+                </figure>
               </div>
             </div>
           </section>

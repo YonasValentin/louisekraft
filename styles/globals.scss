@@ -36,7 +36,6 @@ html,
 body {
   font-family: 'Muli', 'Quicksand', 'poor-richard-regular', sans-serif;
   min-height: 100vh;
-  overflow: hidden;
 }
 
 img,
@@ -60,11 +59,6 @@ a {
 
 .layout {
   margin: 0 auto;
-  min-height: 100vh;
-
-  &__container {
-    @include container;
-  }
 }
 
 .navbar {
@@ -115,7 +109,49 @@ a {
   }
 
   &__item {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
     color: $primary-color !important;
+    border-radius: 23px;
+  }
+
+  &__booking {
+    margin-top: 56px;
+    width: 70%;
+    color: $heading-color !important;
+    border: 2px solid $heading-color;
+    padding: 8px 28px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include media('>=tablet') {
+      margin-top: 0;
+      width: auto;
+    }
+  }
+
+  &-nav {
+    display: flex;
+    align-items: flex-start;
+    height: 100vh;
+    padding-top: 24px;
+    @include media('>=tablet') {
+      padding-top: 0;
+      align-items: center;
+      height: auto;
+      width: auto;
+    }
+  }
+
+  &__language {
+    margin-top: 24px;
+
+    @include media('>=tablet') {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+    }
   }
 }
 
@@ -144,16 +180,39 @@ a {
 }
 
 .hero {
+  position: relative;
+
   &__container {
+    @include container;
     background-color: $subtle-color;
+    padding-top: 36px;
+    padding-bottom: 36px;
+    display: grid;
+
+    @include media('>=tablet') {
+      padding-top: 72px;
+      padding-bottom: 72px;
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   &__text-area {
-    max-width: 742px;
+    grid-row: 2;
+
+    @include media('>=tablet') {
+      grid-row: unset;
+      padding-top: 82px;
+    }
   }
 
   &__text-area-title {
     @include heading-h1;
+    margin-bottom: 15px;
+  }
+
+  &__text-area-sub-title {
+    max-width: 742px;
+    margin-bottom: 28px;
   }
 
   &__text-area-btn {
@@ -161,5 +220,11 @@ a {
     background-color: $accent-color;
     color: $heading-color;
     border-radius: 23px;
+  }
+
+  &__audio {
+    position: absolute;
+    height: 40px;
+    width: 118px;
   }
 }

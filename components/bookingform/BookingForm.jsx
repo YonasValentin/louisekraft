@@ -12,6 +12,11 @@ import TimePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 class LocalizedUtils extends DateFnsUtils {
   getDatePickerHeaderText(date) {
@@ -26,6 +31,17 @@ function BookingForm() {
   );
   const [selectedBookingDates, setSelectedBookingDates] = useState([]);
   const [selectedBookingTime, setSelectedBookingTime] = useState([]);
+  const defaultTimes = [
+    '09:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+  ];
+  const [availableTimes, setAvailableTimes] = useState([]);
 
   const [formLabelText, setFormLabelText] = useState([]);
 
@@ -98,9 +114,13 @@ function BookingForm() {
         bookingDate.getMonth() === selectedDate.getMonth()
       ) {
         bookingDates.push(bookingDate); // gemmer bookingDate i bookingDates
-        const bookingTime = booking.time.toDate().getHours();
-        bookingTimes.push(bookingTime);
-        console.log(bookingTime);
+        const bookingTime = booking.time.toDate();
+        bookingTimes.push(
+          bookingTime.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          })
+        );
       }
     });
 
@@ -108,117 +128,133 @@ function BookingForm() {
     setSelectedBookingDates(bookingDates); // sætter state, selectedBookingDates, med alle de eksisterende bookingdatoer
     setSelectedBookingTime(bookingTimes);
     console.log(bookingTimes);
-
+    setTimes(bookingTimes);
     // Her bookingDates skal bruges til at disable tider i TimePicker
   }
 
+  function setTimes(bookingTimes) {
+    console.log(bookingTimes);
+
+    const results = defaultTimes.filter((time) => {
+      console.log(bookingTimes, time);
+      if (!bookingTimes.includes(time)) {
+        return time;
+      }
+    });
+    console.log(results);
+    setAvailableTimes(results);
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <span>{formLabelText[0]?.acf?.firstname}</span>
-        <input
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          id='firstname'
-          type='text'
-          placeholder='Indtast fornavn'
-          required
-        ></input>
-      </label>
+    <form className='booking-form' onSubmit={handleSubmit}>
+      <div className='booking-form__container'>
+        <label>
+          <span>{formLabelText[0]?.acf?.firstname}</span>
+          <input
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            id='firstname'
+            type='text'
+            placeholder='Indtast fornavn'
+            required
+          ></input>
+        </label>
 
-      <label>
-        <span>{formLabelText[0]?.acf?.lastname}</span>
-        <input
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          id='lastname'
-          type='text'
-          placeholder='Indtast efternavn'
-          required
-        ></input>
-      </label>
+        <label>
+          <span>{formLabelText[0]?.acf?.lastname}</span>
+          <input
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            id='lastname'
+            type='text'
+            placeholder='Indtast efternavn'
+            required
+          ></input>
+        </label>
 
-      <label>
-        <span>{formLabelText[0]?.acf?.email}</span>
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          id='email'
-          type='email'
-          placeholder='Indtast email'
-          required
-        ></input>
-      </label>
+        <label>
+          <span>{formLabelText[0]?.acf?.email}</span>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            id='email'
+            type='email'
+            placeholder='Indtast email'
+            required
+          ></input>
+        </label>
 
-      <label>
-        <span>{formLabelText[0]?.acf?.phone}</span>
-        <input
-          value={phone}
-          placeholder='Indtast telefonnummer'
-          onChange={(e) => setPhone(e.target.value)}
-          id='phone'
-          type='tel'
-          required
-        ></input>
-      </label>
+        <label>
+          <span>{formLabelText[0]?.acf?.phone}</span>
+          <input
+            value={phone}
+            placeholder='Indtast telefonnummer'
+            onChange={(e) => setPhone(e.target.value)}
+            id='phone'
+            type='tel'
+            required
+          ></input>
+        </label>
 
-      <label>
-        <span>{formLabelText[0]?.acf?.ydelse}</span>
+        <label>
+          <span>{formLabelText[0]?.acf?.ydelse}</span>
 
-        <select
-          value={service}
-          onChange={(e) => setService(e.target.value)}
-          id='services'
-          required
-          defaultValue={'default'}
-        >
-          <option disabled value={'default'}>
-            Choose
-          </option>
-          <option value={'one'}>Udredning for ordblind</option>
-          <option value={'two'}>Netværksmøde med forældre og skole</option>
-          <option value={'three'}>
-            Vejledning og undervisning i brug af hjælpemidler i skolens fag
-          </option>
-        </select>
-      </label>
+          <select
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            id='services'
+            required
+            defaultValue={'default'}
+          >
+            <option disabled value={'default'}>
+              Choose
+            </option>
+            <option value={'one'}>Udredning for ordblind</option>
+            <option value={'two'}>Netværksmøde med forældre og skole</option>
+            <option value={'three'}>
+              Vejledning og undervisning i brug af hjælpemidler i skolens fag
+            </option>
+          </select>
+        </label>
 
-      <label>
-        <span>{formLabelText[0]?.acf?.dateandtime}</span>
+        <label>
+          <span>{formLabelText[0]?.acf?.dateandtime}</span>
 
-        <LocalizationProvider
-          utils={LocalizedUtils}
-          locale={daLocale}
-          dateAdapter={AdapterDateFns}
-        >
-          <DatePicker
-            shouldDisableDate={disableWeekdays}
-            renderInput={(props) => <TextField {...props} />}
-            value={selectedDate}
-            onChange={getDate}
-            disablePast
-          ></DatePicker>
-        </LocalizationProvider>
+          <LocalizationProvider
+            utils={LocalizedUtils}
+            locale={daLocale}
+            dateAdapter={AdapterDateFns}
+          >
+            <DatePicker
+              shouldDisableDate={disableWeekdays}
+              renderInput={(props) => <TextField {...props} />}
+              value={selectedDate}
+              onChange={getDate}
+              disablePast
+            ></DatePicker>
+          </LocalizationProvider>
+        </label>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id='demo-simple-select-label'>Tidspunkt</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={selectedTime}
+              label='Tidspunkt'
+              onChange={(e) => setSelectedBookingTime(e.target.value)}
+            >
+              {availableTimes.map((time) => (
+                <MenuItem value={time} key={time}>
+                  {time}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
 
-        <TimePicker
-          value={selectedTime}
-          minTime={setHours(setMinutes(new Date(), 0), 9)}
-          maxTime={setHours(setMinutes(new Date(), 0), 16)}
-          selected={selectedTime}
-          onChange={(time) => setSelectedTime(time)}
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={60}
-          timeCaption='Time'
-          dateFormat='HH:mm'
-          timeFormat='HH:mm'
-          excludeTimes={[selectedBookingTime]}
-        ></TimePicker>
-      </label>
-
-      <audio controls src={formLabelText[0]?.acf?.audio}></audio>
-
-      <button type='submit'>Submit</button>
+        <button type='submit'>Submit</button>
+      </div>
     </form>
   );
 }

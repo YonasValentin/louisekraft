@@ -2,22 +2,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import BookingForm from '../components/bookingform/BookingForm';
+import HeroSection from '../components/herosection/HeroSection';
+import WhatIsSection from '../components/whatissection/WhatIsSection';
 import React, { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [homePageContent, setHomePageContent] = useState([]);
-
-  useEffect(() => {
-    fetch('https://wp.louisekraft.dk/wp-json/wp/v2/posts?include=54')
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setHomePageContent(data);
-        console.log(data);
-      });
-  }, []);
-
   return (
     <div>
       <Head>
@@ -28,37 +17,8 @@ export default function Home() {
 
       <main className='home'>
         <div className='home__container'>
-          <section className='hero'>
-            <div className='hero__container'>
-              <audio
-                className='hero__audio'
-                type='audio/mp3'
-                src={homePageContent[0]?.acf.hero_audio}
-                controls
-              ></audio>
-              <div className='hero__text-area'>
-                <h1 className='hero__text-area-title'>
-                  {homePageContent[0]?.acf?.first_text}
-                </h1>
-                <p className='hero__text-area-sub-title'>
-                  {homePageContent[0]?.acf?.secound_text}
-                </p>
-                <Link href='#' passHref>
-                  <button className='hero__text-area-btn'>
-                    {homePageContent[0]?.acf?.btn_text}
-                  </button>
-                </Link>
-              </div>
-              <div className='hero__image-area'>
-                <figure>
-                  <img
-                    src={homePageContent[0]?.acf.image_hero}
-                    alt={homePageContent[0]?.acf.alt_text_hero}
-                  ></img>
-                </figure>
-              </div>
-            </div>
-          </section>
+          <HeroSection />
+          <WhatIsSection />
           <BookingForm />
         </div>
       </main>

@@ -31,6 +31,7 @@ $heading-color: #0a485a;
 $body-color: #545454;
 $accent-color: #ffaa00;
 $subtle-color: #f9f7fb;
+$subtle-blue-color: #f0f7f8;
 $white-color: #fff;
 
 @mixin heading {
@@ -92,4 +93,23 @@ $white-color: #fff;
     font-size: 20px;
     line-height: 25px;
   }
+}
+
+@mixin body-text {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  color: $body-color;
+  font-size: 14px;
+  line-height: 20px;
+
+  @include media('>=tablet') {
+    font-size: 20px;
+    line-height: 33px;
+  }
+}
+
+@mixin body-text-2 {
+  @include body-text;
+  color: $heading-color;
+  font-weight: 700;
 }
